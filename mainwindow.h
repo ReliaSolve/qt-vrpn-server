@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QSensor>
+#include <QGyroscope>
 #include <vrpn_Connection.h>
 #include <vrpn_Analog.h>
 #include <vrpn_Button.h>
@@ -55,6 +56,9 @@ private:
     vrpn_Connection *m_connection = nullptr;
     vrpn_Button_Server *m_buttons = nullptr;
     vrpn_Analog_Server *m_analogs = nullptr;
+
+    // Sensors we can read from the device
+    QGyroscope *m_gyro = nullptr;
 
     // Periodic updates
     QTimer *m_timer = nullptr;

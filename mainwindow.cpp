@@ -7,23 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Start up all of the sensors we might have and set handlers for their values.
-    m_gyro = new QGyroscope(this);
-    connect(m_gyro, SIGNAL(readingChanged()), this, SLOT(HandleGyro()));
-    if (m_gyro->isBusy()) {
-      m_statusText += "Gyro is busy.\n";
-    }
-    //m_gyro->connectToBackend(); // start() does this
-    m_gyro->setActive(true);
-    m_gyro->start();
-
-    m_accel = new QAccelerometer(this);
-    connect(m_accel, SIGNAL(readingChanged()), this, SLOT(HandleAccel()));
-    //m_accel->connectToBackend(); // start() does this
-    m_accel->setActive(true);
-    m_accel->start();
-    m_statusText += "Accel description: " + m_accel->description() + "\n";
-
     // Construct our VRPN devices
     m_connection = vrpn_create_server_connection();
     if (m_connection == nullptr) {
@@ -153,6 +136,30 @@ void MainWindow::HandleAccel()
 
 void MainWindow::Update()
 {
+  // Configure any devices that have not yet been started.  We do this here rather than
+  // in the constructor so that we know everything has been set up first.
+
+  if (!m_gyro) {
+    // Start up all of the sensors we might have and set handlers for their values.
+    m_gyro = new QGyroscope(this);
+    connect(m_gyro, SIGNAL(readingChanged()), this, SLOT(HandleGyro()));
+    if (m_gyro->isBusy()) {
+      m_statusText += "Gyro is busy.\n";
+    }
+    //m_gyro->connectToBackend(); // start() does this
+    m_gyro->setActive(true);
+    m_gyro->start();
+  }
+
+  if (!m_accel) {
+    m_accel = new QAccelerometer(this);
+    connect(m_accel, SIGNAL(readingChanged()), this, SLOT(HandleAccel()));
+    //m_accel->connectToBackend(); // start() does this
+    m_accel->setActive(true);
+    m_accel->start();
+    m_statusText += "Accel description: " + m_accel->description() + "\n";
+  }
+
   // Send any VRPN reports
   if (m_connection) {
     if (m_analogs) {

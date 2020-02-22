@@ -10,12 +10,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+win32 {
+  # Windows wants to compile .C files as if they were .c files, as C.
+  # Force the Visual Studio compiler to build as C++ for the VRPN files.
+  QMAKE_CFLAGS  += /TP
+  # Turn off UNICODE on Windows so we can compile the VRPN files.
+  DEFINES -= UNICODE
+}
+
 # Pull source files directly from VRPN so we don't need to separately
 # compile the library.
 #INCLUDEPATH += C:/usr/local/include
 #INCLUDEPATH += /usr/local/include
 #LIBS += -L"C:/usr/local/lib" -L"/usr/local/lib" -lvrpnserver
-INCLUDEPATH += ./vrpn
+INCLUDEPATH += $$PWD/vrpn
 SOURCES += \
     vrpn/vrpn_Connection.C \
     vrpn/vrpn_FileConnection.C \

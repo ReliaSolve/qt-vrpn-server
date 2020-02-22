@@ -7,23 +7,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Find out what types of sensors we have available.
-    // When we tried asking for a list of types, it returned empty on Android so we list all of
-    // the ones we'd like to have and see if they work.
-    m_statusText += "Sensor types:\n";
+    // Start up all of the sensors we might have and set handlers for their values.
     m_gyro = new QGyroscope(this);
-    if (m_gyro->start()) {
-      m_statusText += " +Gyro\n";
-    } else {
-      m_statusText += " -Gyro\n";
-      delete m_gyro;
-      m_gyro = nullptr;
-    }
-
-    //QList<QByteArray> sts = QSensor::sensorTypes();
-    //for (auto t : sts) {
-    //  m_statusText += "  " + t + "\n";
-    //}
+    connect(m_gyro, SIGNAL(readingChanged()), this, SLOT(HandleGyro()));
+    m_gyro->start();
 
     // Construct our VRPN devices
     m_connection = vrpn_create_server_connection();
@@ -122,18 +109,18 @@ void MainWindow::Analog1(int percent)
   DisplayState();
 }
 
+void MainWindow::HandleGyro()
+{
+  QGyroscopeReading *reading = m_gyro->reading();
+  if (m_analogs && reading) {
+    m_analogs->channels()[0] = reading->x();
+    m_analogs->channels()[1] = reading->y();
+    m_analogs->channels()[2] = reading->z();
+  }
+}
+
 void MainWindow::Update()
 {
-  // Update any sensors
-  if (m_gyro) {
-    QGyroscopeReading *reading = m_gyro->reading();
-    if (m_analogs && reading) {
-      m_analogs->channels()[0] = reading->x();
-      m_analogs->channels()[1] = reading->y();
-      m_analogs->channels()[2] = reading->z();
-    }
-  }
-
   // Send any VRPN reports
   if (m_connection) {
     if (m_analogs) {

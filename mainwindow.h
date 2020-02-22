@@ -33,6 +33,7 @@ public slots:
 
 protected slots:
     void Update();
+    void HandleGyro();
 
 signals:
     void displayText(QString text);

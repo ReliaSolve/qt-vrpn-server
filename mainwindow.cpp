@@ -12,11 +12,13 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_gyro, SIGNAL(readingChanged()), this, SLOT(HandleGyro()));
     m_gyro->connectToBackend();
     m_gyro->start();
+    m_statusText += "Gyro description: " + m_gyro->description() + "\n";
 
     m_accel = new QAccelerometer(this);
     connect(m_accel, SIGNAL(readingChanged()), this, SLOT(HandleAccel()));
     m_accel->connectToBackend();
     m_accel->start();
+    m_statusText += "Accel description: " + m_accel->description() + "\n";
 
     // Construct our VRPN devices
     m_connection = vrpn_create_server_connection();

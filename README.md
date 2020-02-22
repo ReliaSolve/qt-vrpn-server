@@ -10,8 +10,8 @@ The project can be opened with QtCreator and configured with the appropriate kit
 
 To restrict the program to only devices that support its needed features, you can add
 lines like the following to the manifest file:
-*  <uses-feature android:name="android.hardware.sensor.accelerometer" />
-These will cause the program only to be offered on the Play Store to devices with
+`<uses-feature android:name="android.hardware.sensor.accelerometer" />`
+This will cause the program only to be offered on the Play Store to devices with
 those features.
 
 # Resources

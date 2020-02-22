@@ -10,6 +10,11 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
+# Needed to use VRPN
+INCLUDEPATH += C:/usr/local/include
+INCLUDEPATH += /usr/local/include
+LIBS += -L"C:/usr/local/lib" -L"/usr/local/lib" -lvrpnserver
+
 SOURCES += \
 #        GeneralOpenGLWidget.cpp \
         main.cpp \

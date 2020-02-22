@@ -8,9 +8,11 @@ a pose estimated from them.  It also exports some buttons and sliders.
 
 The project can be opened with QtCreator and configured with the appropriate kit.
 
-To enable the sensors on Android, you need in AndroidManifest.xml of the main application
-to add:
-    <uses-feature android:name="android.hardware.sensor.accelerometer" />
+To restrict the program to only devices that support its needed features, you can add
+lines like the following to the manifest file:
+*  <uses-feature android:name="android.hardware.sensor.accelerometer" />
+These will cause the program only to be offered on the Play Store to devices with
+those features.
 
 # Resources
 

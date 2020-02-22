@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete m_gyro;
     delete m_buttons;
     delete m_analogs;
     if (m_connection) {
@@ -117,6 +118,7 @@ void MainWindow::HandleGyro()
     m_analogs->channels()[1] = reading->y();
     m_analogs->channels()[2] = reading->z();
   }
+  m_statusText = "Gyro working\n";
 }
 
 void MainWindow::Update()

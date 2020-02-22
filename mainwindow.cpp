@@ -10,13 +10,15 @@ MainWindow::MainWindow(QWidget *parent) :
     // Start up all of the sensors we might have and set handlers for their values.
     m_gyro = new QGyroscope(this);
     connect(m_gyro, SIGNAL(readingChanged()), this, SLOT(HandleGyro()));
-    m_gyro->connectToBackend();
+    //m_gyro->connectToBackend(); // start() does this
+    m_gyro->setActive(true);
     m_gyro->start();
     m_statusText += "Gyro description: " + m_gyro->description() + "\n";
 
     m_accel = new QAccelerometer(this);
     connect(m_accel, SIGNAL(readingChanged()), this, SLOT(HandleAccel()));
-    m_accel->connectToBackend();
+    //m_accel->connectToBackend(); // start() does this
+    m_accel->setActive(true);
     m_accel->start();
     m_statusText += "Accel description: " + m_accel->description() + "\n";
 

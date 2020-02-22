@@ -10,10 +10,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++11
 
-# Needed to use VRPN
-INCLUDEPATH += C:/usr/local/include
-INCLUDEPATH += /usr/local/include
-LIBS += -L"C:/usr/local/lib" -L"/usr/local/lib" -lvrpnserver
+# Pull source files directly from VRPN so we don't need to separately
+# compile the library.
+#INCLUDEPATH += C:/usr/local/include
+#INCLUDEPATH += /usr/local/include
+#LIBS += -L"C:/usr/local/lib" -L"/usr/local/lib" -lvrpnserver
+INCLUDEPATH += ./vrpn
+SOURCES += \
+    vrpn/vrpn_Connection.C \
+    vrpn/vrpn_FileConnection.C \
+    vrpn/vrpn_Analog.C \
+    vrpn/vrpn_Button.C \
+    vrpn/vrpn_BaseClass.C \
+    vrpn/vrpn_Shared.C \
+    vrpn/vrpn_Thread.C \
+    vrpn/vrpn_EndpointContainer.C \
+    vrpn/vrpn_Serial.C
 
 SOURCES += \
 #        GeneralOpenGLWidget.cpp \

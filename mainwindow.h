@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QSensor>
 #include <QGyroscope>
+#include <QAccelerometer>
 #include <vrpn_Connection.h>
 #include <vrpn_Analog.h>
 #include <vrpn_Button.h>
@@ -34,6 +35,7 @@ public slots:
 protected slots:
     void Update();
     void HandleGyro();
+    void HandleAccel();
 
 signals:
     void displayText(QString text);
@@ -60,6 +62,7 @@ private:
 
     // Sensors we can read from the device
     QGyroscope *m_gyro = nullptr;
+    QAccelerometer *m_accel = nullptr;
 
     // Periodic updates
     QTimer *m_timer = nullptr;

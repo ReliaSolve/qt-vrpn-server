@@ -6,12 +6,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    DisplayState();
+
+    // Find out what types of sensors we have available
+    QList<QByteArray> sts = QSensor::sensorTypes();
+    m_statusText += "Sensor types:\n";
+    for (auto t : sts) {
+      m_statusText += "  " + t + "\n";
+    }
 
     // Construct our VRPN devices
     m_connection = vrpn_create_server_connection();
     if (m_connection == nullptr) {
-      m_statusText = "Could not create VRPN connection\n";
+      m_statusText += "Could not create VRPN connection\n";
     } else {
       m_buttons = new vrpn_Button_Server("Button0", m_connection, 3);
       m_analogs = new vrpn_Analog_Server("Analog0", m_connection, 2);
@@ -20,7 +26,11 @@ MainWindow::MainWindow(QWidget *parent) :
     // Construct our periodic timer that runs 100 times/second
     m_timer = new QTimer(this);
     connect(m_timer, SIGNAL(timeout()), this, SLOT(Update()));
-    m_timer->start(10);}
+    m_timer->start(10);
+
+    // Report our state
+    DisplayState();
+}
 
 MainWindow::~MainWindow()
 {

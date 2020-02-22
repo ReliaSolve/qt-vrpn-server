@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QSensor>
 #include <vrpn_Connection.h>
 #include <vrpn_Analog.h>
 #include <vrpn_Button.h>

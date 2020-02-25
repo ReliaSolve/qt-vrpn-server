@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QtNetwork/QtNetwork>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -7,22 +8,32 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Get my IP address so the client will know where to connect
+    m_statusText += "Network interfaces:";
+    QList<QHostAddress> list = QNetworkInterface::allAddresses();
+    for(int nIter=0; nIter<list.count(); nIter++) {
+      if(!list[nIter].isLoopback()) {
+          if (list[nIter].protocol() == QAbstractSocket::IPv4Protocol ) {
+              m_statusText += " " + list[nIter].toString();
+          }
+      }
+    }
+    m_statusText += "\n";
+
     // Start up all of the sensors we might have and set handlers for their values.
     m_gyro = new QGyroscope(this);
     connect(m_gyro, SIGNAL(readingChanged()), this, SLOT(HandleGyro()));
-    if (m_gyro->isBusy()) {
-      m_statusText += "Gyro is busy.\n";
-    }
-    //m_gyro->connectToBackend(); // start() does this
     m_gyro->setActive(true);
-    m_gyro->start();
+    if (m_gyro->start()) {
+        m_statusText += "Gyro enabled\n";
+    }
 
     m_accel = new QAccelerometer(this);
     connect(m_accel, SIGNAL(readingChanged()), this, SLOT(HandleAccel()));
-    //m_accel->connectToBackend(); // start() does this
     m_accel->setActive(true);
-    m_accel->start();
-    m_statusText += "Accel description: " + m_accel->description() + "\n";
+    if (m_accel->start()) {
+        m_statusText += "Accel enabled\n";
+    }
 
     // Construct our VRPN devices
     m_connection = vrpn_create_server_connection();
@@ -137,7 +148,6 @@ void MainWindow::HandleGyro()
     m_analogs->channels()[1] = reading->y();
     m_analogs->channels()[2] = reading->z();
   }
-  m_statusText = "Gyro working\n";
 }
 
 void MainWindow::HandleAccel()
@@ -148,7 +158,6 @@ void MainWindow::HandleAccel()
     m_analogs->channels()[3+1] = reading->y();
     m_analogs->channels()[3+2] = reading->z();
   }
-  m_statusText = "Accel working\n";
 }
 
 void MainWindow::Update()

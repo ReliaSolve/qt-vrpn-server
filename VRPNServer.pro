@@ -1,4 +1,4 @@
-QT       += core gui widgets sensors
+QT       += core gui widgets sensors network
 TARGET = VRPNServer
 TEMPLATE = app
 

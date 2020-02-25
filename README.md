@@ -27,5 +27,3 @@ https://doc.qt.io/qtcreator/creator-deploying-android.html
 
 https://doc.qt.io/qt-5/deployment-android.html
 
-https://forum.qt.io/topic/99606/can-not-using-the-qaccelerometer-in-the-android-service
-

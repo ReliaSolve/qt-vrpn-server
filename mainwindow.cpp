@@ -24,15 +24,17 @@ MainWindow::MainWindow(QWidget *parent) :
     m_gyro = new QGyroscope(this);
     connect(m_gyro, SIGNAL(readingChanged()), this, SLOT(HandleGyro()));
     m_gyro->setActive(true);
-    if (m_gyro->start()) {
-        m_statusText += "Gyro enabled\n";
+    if (!m_gyro->start()) {
+        delete m_gyro;
+        m_gyro = nullptr;
     }
 
     m_accel = new QAccelerometer(this);
     connect(m_accel, SIGNAL(readingChanged()), this, SLOT(HandleAccel()));
     m_accel->setActive(true);
-    if (m_accel->start()) {
-        m_statusText += "Accel enabled\n";
+    if (!m_accel->start()) {
+        delete m_accel;
+        m_accel = nullptr;
     }
 
     // Construct our VRPN devices

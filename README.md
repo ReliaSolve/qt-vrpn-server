@@ -27,3 +27,5 @@ https://doc.qt.io/qtcreator/creator-deploying-android.html
 
 https://doc.qt.io/qt-5/deployment-android.html
 
+https://forum.qt.io/topic/111388/problem-with-qmagnetometer-et-qaccelerometer-under-qt-5-14-1-and-android
+

@@ -149,6 +149,7 @@ void MainWindow::HandleGyro()
     m_analogs->channels()[0] = reading->x();
     m_analogs->channels()[1] = reading->y();
     m_analogs->channels()[2] = reading->z();
+    DisplayState();
   }
 }
 
@@ -159,6 +160,7 @@ void MainWindow::HandleAccel()
     m_analogs->channels()[3+0] = reading->x();
     m_analogs->channels()[3+1] = reading->y();
     m_analogs->channels()[3+2] = reading->z();
+    DisplayState();
   }
 }
 

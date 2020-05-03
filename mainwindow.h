@@ -48,10 +48,12 @@ private:
     QString m_displayText;
     QString m_statusText;
 
+    // First three buttons of the Button0 device
     bool m_button0 = false;
     bool m_button1 = false;
     bool m_button2 = false;
 
+    // Analogs 6 and 7 from the Analog0 device
     double m_analog0 = 0;
     double m_analog1 = 0;
 

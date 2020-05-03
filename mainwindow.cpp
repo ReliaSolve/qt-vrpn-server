@@ -71,24 +71,24 @@ MainWindow::~MainWindow()
 void MainWindow::DisplayState()
 {
   m_displayText.clear();
-  m_displayText += "Buttons: 0= " + QString::number((m_button0));
+  m_displayText += "Button0: 0= " + QString::number((m_button0));
   m_displayText += "; 1= " + QString::number((m_button1));
   m_displayText += "; 2= " + QString::number((m_button2));
   m_displayText += "\n";
   if (m_analogs && m_gyro) {
-    m_displayText += "Gyro: = " +
+    m_displayText += "Gyro (Analog0:0-2): = " +
         QString::number((m_analogs->channels()[0])) + "," +
         QString::number((m_analogs->channels()[1])) + "," +
         QString::number((m_analogs->channels()[2])) + "\n";
   }
   if (m_analogs && m_accel) {
-    m_displayText += "Accel: = " +
+    m_displayText += "Accel (Analog0:3-5): = " +
         QString::number((m_analogs->channels()[3+0])) + "," +
         QString::number((m_analogs->channels()[3+1])) + "," +
         QString::number((m_analogs->channels()[3+2])) + "\n";
   }
-  m_displayText += "Analogs: 0= " + QString::number((m_analog0));
-  m_displayText += "; 1= " + QString::number((m_analog1));
+  m_displayText += "Analog0: 6= " + QString::number((m_analog0));
+  m_displayText += "; 7= " + QString::number((m_analog1));
   m_displayText += "\n";
   emit displayText(m_statusText + m_displayText);
 }

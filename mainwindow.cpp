@@ -8,6 +8,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Report the version of the program
+    m_statusText += "Version: " + m_version + "\n";
+
     // Get my IP address so the client will know where to connect
     m_statusText += "Network interfaces:";
     QList<QHostAddress> list = QNetworkInterface::allAddresses();

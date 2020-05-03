@@ -41,6 +41,9 @@ signals:
     void displayText(QString text);
 
 private:
+
+    const QString m_version = "1.0.0";
+
     Ui::MainWindow *ui;
 
     // Local state
